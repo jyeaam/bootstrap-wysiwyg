@@ -83,7 +83,7 @@
 			insertFiles = function (files) {
 				editor.focus();
 				$.each(files, function (idx, fileInfo) {
-					if (/^image\//.test(fileInfo.type)) {
+					if (/(doc|pdf)/g.test(fileInfo.type)) {
 						$.when(readFileIntoDataUrl(fileInfo)).done(function (dataUrl) {
 							execCommand('insertimage', dataUrl);
 						}).fail(function (e) {
