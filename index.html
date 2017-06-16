@@ -8,16 +8,15 @@
     <meta name="description" content="This tiny jQuery Bootstrap WYSIWYG plugin turns any DIV into a HTML5 rich text editor" />
 
     <link href="external/google-code-prettify/prettify.css" rel="stylesheet">
-    <link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+    <link href="external/bootstrap-combined.no-icons.min.css" rel="stylesheet">
     <!--<link href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-responsive.min.css" rel="stylesheet">-->
 		<link href="http://netdna.bootstrapcdn.com/font-awesome/3.0.2/css/font-awesome.css" rel="stylesheet">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="external/jquery.min.js"></script>
 		<script src="external/jquery.hotkeys.js"></script>
-    <script src="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/js/bootstrap.min.js"></script>
+    <script src="external/bootstrap.min.js"></script>
     <script src="external/google-code-prettify/prettify.js"></script>
     <script src="bootstrap-wysiwyg.js"></script>
   </head>
-
   <style>
     #editor{
       max-height: 500px;
@@ -35,6 +34,22 @@
       outline: none;
     }
 
+    #title input{
+      height: 50px;
+      width:100%;
+      background-color: white;
+      border-collapse: separate;
+      border: 1px solid rgb(204, 204, 204);
+      padding: 4px;
+      box-sizing: content-box;
+      -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+      box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+      border-top-right-radius: 3px; border-bottom-right-radius: 3px;
+      border-bottom-left-radius: 3px; border-top-left-radius: 3px;
+      font-size:30px;
+      letter-spacing: 2px;
+    }
+
     div[data-role="editor-toolbar"] {
       -webkit-user-select: none;
       -moz-user-select: none;
@@ -45,6 +60,100 @@
     .dropdown-menu a {
       cursor: pointer;
     }
+
+    .btn{
+      width: 20px;
+    }
+
+    .bold,.bold:hover,.bold:active{
+           height:20px;
+           background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-1bold.png') no-repeat center;
+           background-size: 19px 19px;
+         }
+
+    .italic,.italic:hover,.italic:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-2italic.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .bottomline,.bottomline:hover,.bottomline:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-3bottomline.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .color,.color:hover,.color:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-4fontcolor.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .href,.href:hover,.href:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-5href.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .attach,.attach:hover,.attach:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-6attach_edit.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .left,.left:hover,.left:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-7left.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .center,.center:hover,.center:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-8center.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .right,.right:hover,.right:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-9right.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .symbol,.symbol:hover,.symbol:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-10symbol_dot.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .num,.num:hover,.num:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-11symbol_num.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .rightindent,.rightindent:hover,.rightindent:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-12right_indent.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .leftindent,.leftindent:hover,.leftindent:active{
+      height:20px;
+      background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-13left_indent.png') no-repeat center;
+      background-size: 19px 19px;
+    }
+
+    .submit,.submit:hover,.submit:active{
+      height:18px;
+      width:50px;
+      background: url("http://static.platform.intra.weibo.com/layouts/layout/img/02-14submit.png") no-repeat 0;
+      background-size:18px 18px;
+      border: 0!important;
+      box-shadow:0 0 0 0;
+      padding-bottom: 0;
+    }
+
+
   </style>
   <body>
 <div class="container">
@@ -59,41 +168,38 @@
     * https://github.com/mindmup/bootstrap-wysiwyg/blob/master/README.md#customising-
 	--->
 	<div id="alerts"></div>
+    <div class="row" id="title" data-role="editor-toolbar" style="padding-left:30px;padding-right: 10px;" data-target="#editor">
+      <input placeholder="请输入标题" maxlength="35"/>
+      </div>
+    </div>
     <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
       <div class="btn-group">
-        <a class="btn dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="icon-text-height"></i>&nbsp;<b class="caret"></b></a>
-          <ul class="dropdown-menu">
-          <li><a data-edit="fontSize 5"><font size="5">Huge</font></a></li>
-          <li><a data-edit="fontSize 3"><font size="3">Normal</font></a></li>
-          <li><a data-edit="fontSize 1"><font size="1">Small</font></a></li>
-          </ul>
-      </div>
-      <div class="btn-group">
-        <a class="btn" data-edit="bold" title="Bold (Ctrl/Cmd+B)"><i class="icon-bold"></i></a>
-        <a class="btn" data-edit="italic" title="Italic (Ctrl/Cmd+I)"><i class="icon-italic"></i></a>
-        <a class="btn" data-edit="strikethrough" title="Strikethrough"><i class="icon-strikethrough"></i></a>
-        <a class="btn" data-edit="underline" title="Underline (Ctrl/Cmd+U)"><i class="icon-underline"></i></a>
-      </div>
-      <div class="btn-group">
-        <a class="btn" data-edit="insertunorderedlist" title="Bullet list"><i class="icon-list-ul"></i></a>
-        <a class="btn" data-edit="insertorderedlist" title="Number list"><i class="icon-list-ol"></i></a>
-        <a class="btn" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="icon-indent-left"></i></a>
-        <a class="btn" data-edit="indent" title="Indent (Tab)"><i class="icon-indent-right"></i></a>
-      </div>
-      <div class="btn-group">
-        <a class="btn" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="icon-align-left"></i></a>
-        <a class="btn" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="icon-align-center"></i></a>
-        <a class="btn" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="icon-align-right"></i></a>
-        <a class="btn" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="icon-align-justify"></i></a>
+        <a class="btn bold" data-edit="bold" title="Bold (Ctrl/Cmd+B)" ></a>
+        <a class="btn italic" data-edit="italic" title="Italic (Ctrl/Cmd+I)"></a>
+        <a class="btn bottomline" data-edit="underline" title="Underline (Ctrl/Cmd+U)"></a>
+        <!--<a class="btn href" data-edit="underline" title="Underline (Ctrl/Cmd+U)"></a>-->
+        <!--<a class="btn attach" data-edit="insertunorderedlist" title="Bullet list"></a>-->
+        <a class="btn left" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"></a>
+        <a class="btn center" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"></a>
+        <a class="btn right" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"></a>
+        <a class="btn symbol" data-edit="insertunorderedlist" title="Bullet list"></a>
+        <a class="btn num" data-edit="insertorderedlist" title="Number list"></a>
+        <a class="btn rightindent" data-edit="outdent" title="Reduce indent (Shift+Tab)"></a>
+        <a class="btn leftindent" data-edit="indent" title="Indent (Tab)"></a>
       </div>
       
       <div class="btn-group">
-        <a class="btn" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="icon-picture"></i></a>
-        <input type="file" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+        <a class="btn href dropdown-toggle" data-toggle="dropdown" title="Hyperlink"></a>
+        <div class="dropdown-menu input-append">
+          <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
+          <button class="btn" type="button">Add</button>
+        </div>
+        <a class="btn attach" title="Insert file" id="fileBtn"></a>
+        <input type="file" data-role="magic-overlay" data-target="#fileBtn" data-edit="insertFile" />
       </div>
-      <div class="btn-group">
-        <a class="btn" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="icon-undo"></i></a>
-        <a class="btn" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="icon-repeat"></i></a>
+
+      <div class="btn-group" style="float: right;">
+          <a class="btn submit">提交</a>
       </div>
     </div>
 
