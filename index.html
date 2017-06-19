@@ -157,85 +157,149 @@
   </style>
   <body>
 <div class="container">
-  <div class="" style="margin-top: 50px;">
-	<!---
-	Please read this before copying the toolbar:
+  <div class="container-fluid">
 
-	* One of the best things about this widget is that it does not impose any styling on you, and that it allows you 
-	* to create a custom toolbar with the options and functions that are good for your particular use. This toolbar
-	* is just an example - don't just copy it and force yourself to use the demo styling. Create your own. Read 
-	* this page to understand how to customise it:
-    * https://github.com/mindmup/bootstrap-wysiwyg/blob/master/README.md#customising-
-	--->
-	<div id="alerts"></div>
-    <div class="row" id="title" data-role="editor-toolbar" style="padding-left:30px;padding-right: 10px;" data-target="#editor">
-      <input placeholder="请输入标题" maxlength="35"/>
-      </div>
+
+    <div class="row" style="margin-top: 20px;">
+
+        <form>
+            <div id="title" data-role="editor-toolbar" data-target="#editor" style="margin-bottom: 10px;padding-right: 18px;">
+                <input type="text" id="titletext" placeholder="请输入标题" maxlength="35"/>
+            </div>
+
+            <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+                <div class="btn-group">
+                    <a class="btn bold" data-edit="bold" title="Bold (Ctrl/Cmd+B)" ></a>
+                    <a class="btn italic" data-edit="italic" title="Italic (Ctrl/Cmd+I)"></a>
+                    <a class="btn bottomline" data-edit="underline" title="Underline (Ctrl/Cmd+U)"></a>
+                    <!--<a class="btn href" data-edit="underline" title="Underline (Ctrl/Cmd+U)"></a>-->
+                    <!--<a class="btn attach" data-edit="insertunorderedlist" title="Bullet list"></a>-->
+                    <a class="btn left" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"></a>
+                    <a class="btn center" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"></a>
+                    <a class="btn right" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"></a>
+                    <a class="btn symbol" data-edit="insertunorderedlist" title="Bullet list"></a>
+                    <a class="btn num" data-edit="insertorderedlist" title="Number list"></a>
+                    <a class="btn rightindent" data-edit="outdent" title="Reduce indent (Shift+Tab)"></a>
+                    <a class="btn leftindent" data-edit="indent" title="Indent (Tab)"></a>
+                </div>
+
+                <div class="btn-group">
+                    <a class="btn href dropdown-toggle" data-toggle="dropdown" title="Hyperlink"></a>
+                    <div class="dropdown-menu input-append" style="width: 210px;">
+                        <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
+                        <button class="btn" type="button" style="width: 34px;padding: 4px 4px;">Add</button>
+                    </div>
+                    <a class="btn attach" title="Insert file" id="fileBtn"></a>
+                    <input type="file" data-role="magic-overlay" data-target="#fileBtn" data-edit="insertFile" id="file" />
+                </div>
+
+                <div class="btn-group" style="float: right;">
+                    <input type="button" class="btn submit" style="padding-top: 5px;">提交</input>
+                </div>
+            </div>
+
+            <div id="editor" style="margin-top: 10px;">
+                Go ahead&hellip;
+            </div>
+        </form>
+
+
     </div>
-    <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
-      <div class="btn-group">
-        <a class="btn bold" data-edit="bold" title="Bold (Ctrl/Cmd+B)" ></a>
-        <a class="btn italic" data-edit="italic" title="Italic (Ctrl/Cmd+I)"></a>
-        <a class="btn bottomline" data-edit="underline" title="Underline (Ctrl/Cmd+U)"></a>
-        <!--<a class="btn href" data-edit="underline" title="Underline (Ctrl/Cmd+U)"></a>-->
-        <!--<a class="btn attach" data-edit="insertunorderedlist" title="Bullet list"></a>-->
-        <a class="btn left" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"></a>
-        <a class="btn center" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"></a>
-        <a class="btn right" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"></a>
-        <a class="btn symbol" data-edit="insertunorderedlist" title="Bullet list"></a>
-        <a class="btn num" data-edit="insertorderedlist" title="Number list"></a>
-        <a class="btn rightindent" data-edit="outdent" title="Reduce indent (Shift+Tab)"></a>
-        <a class="btn leftindent" data-edit="indent" title="Indent (Tab)"></a>
-      </div>
-      
-      <div class="btn-group">
-        <a class="btn href dropdown-toggle" data-toggle="dropdown" title="Hyperlink"></a>
-        <div class="dropdown-menu input-append">
-          <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
-          <button class="btn" type="button">Add</button>
-        </div>
-        <a class="btn attach" title="Insert file" id="fileBtn"></a>
-        <input type="file" data-role="magic-overlay" data-target="#fileBtn" data-edit="insertFile" />
-      </div>
-
-      <div class="btn-group" style="float: right;">
-          <a class="btn submit">提交</a>
-      </div>
-    </div>
-
-    <div id="editor">
-      Go ahead&hellip;
-    </div>
-  </div>
-
 
 </div>
-<script>
-  $(function(){
-    function initToolbarBootstrapBindings() {
-      $('a[title]').tooltip({container:'body'});
-    	$('.dropdown-menu input').click(function() {return false;})
-		    .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
-        .keydown('esc', function () {this.value='';$(this).change();});
 
-      $('[data-role=magic-overlay]').each(function () { 
-        var overlay = $(this), target = $(overlay.data('target')); 
-        overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
-      });
-	};
-	function showErrorAlert (reason, detail) {
-		var msg='';
-		if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
-		else {
-			console.log("error uploading file", reason, detail);
-		}
-		$('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>'+ 
-		 '<strong>File upload error</strong> '+msg+' </div>').prependTo('#alerts');
-	};
-    initToolbarBootstrapBindings();  
-	$('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
-    window.prettyPrint && prettyPrint();
-  });
+<script>
+
+    $(function(){
+        function initToolbarBootstrapBindings() {
+            $('a[title]').tooltip({container:'body'});
+            $('.dropdown-menu input').click(function() {return false;})
+                .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
+                .keydown('esc', function () {this.value='';$(this).change();});
+
+            $('[data-role=magic-overlay]').each(function () {
+                var overlay = $(this), target = $(overlay.data('target'));
+                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+            });
+        };
+        function showErrorAlert (reason, detail) {
+            var msg='';
+            if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
+            else {
+                console.log("error uploading file", reason, detail);
+            }
+           alert("文件上传失败："+' '+msg);
+        };
+        initToolbarBootstrapBindings();
+        $('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
+        window.prettyPrint && prettyPrint();
+    });
+</script>
+
+<script>
+    //      function html_encode(str) {
+    //          var s = "";
+    //          if (str.length == 0)
+    //              return "";
+    //          s = str.replace(/&/g, "&gt;");
+    //          s = s.replace(/</g, "&lt;");
+    //          s = s.replace(/>/g, "&gt;");
+    //          s = s.replace(/ /g, "&nbsp;");
+    //          s = s.replace(/\'/g, "&#39;");
+    //          s = s.replace(/\"/g, "&quot;");
+    //          s = s.replace(/\n/g, "<br>");
+    //          return s;
+    //      }
+    //
+    //      function html_decode(str) {
+    //          var s = "";
+    //          if (str.length == 0)
+    //              return "";
+    //          s = str.replace(/&gt;/g, "&");
+    //          s = s.replace(/&lt;/g, "<");
+    //          s = s.replace(/&gt;/g, ">");
+    //          s = s.replace(/&nbsp;/g, " ");
+    //          s = s.replace(/&#39;/g, "\'");
+    //          s = s.replace(/&quot;/g, "\"");
+    //          s = s.replace(/<br>/g, "\n");
+    //          return s;
+    //      }
+
+    function submit() {
+        var myhtml = document.getElementById("editor").outerHTML;
+        var mytitle = $('#title').html();
+
+        var formData = new FormData();
+        formData.append('file', $('#file')[0].files[0]);
+        formData;
+
+//        $('#aaa').html(myhtml);
+        var mydate = new Date();
+        var time='';
+        time = mydate.getFullYear(); //获取当前年份(2位)
+        time = time + '-' + mydate.getMonth(); //获取当前月份(0-11,0代表1月)
+        time = time + '-' +mydate.getDate(); //获取当前日(1-31)
+
+        fileurl;
+        $.ajax({
+            url: "submit",
+            type: "post",
+            dataType: "json",
+            contentType: "application/x-www-form-urlencoded",
+            traditional: true,
+            data:{"content":myhtml,
+//                "file":filedata,
+                "title":mytitle,
+                "time":time,
+                "file":fileurl
+            },
+            success: function (data) {
+                $('#aaa').html(data.content);
+//						$("#result").html("<div id=\"judge_image\"><image src='"+image+"'></div>");
+            }
+        });
+    }
+
 </script>
 </body>
 </html>
