@@ -1,0 +1,441 @@
+<?php require_once (APP_PATH.'application/views/common/header.phtml');?>
+
+<link href="http://static.platform.intra.weibo.com/layouts/layout/css/prettify.css" type="text/css"  rel="stylesheet">
+<script src="http://static.platform.intra.weibo.com/layouts/layout/scripts/wysiwyg-jquery.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/layouts/layout/scripts/jquery.hotkeys.js"></script>
+<script src="http://static.platform.intra.weibo.com/layouts/layout/scripts/prettify.js"></script>
+<script src="http://static.platform.intra.weibo.com/layouts/layout/scripts/bootstrap-wysiwyg.js"></script>
+
+<style>
+    #editor{
+        max-height: 800px;
+        height: 800px;
+        background-color: white;
+        border-collapse: separate;
+        border: 1px solid rgb(204, 204, 204);
+        padding: 4px;
+        box-sizing: content-box;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+        box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+        border-top-right-radius: 3px; border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px; border-top-left-radius: 3px;
+        overflow: scroll;
+        outline: none;
+    }
+
+    #title input{
+        height: 50px;
+        width:100%;
+        background-color: white;
+        border-collapse: separate;
+        border: 1px solid rgb(204, 204, 204);
+        padding: 4px;
+        box-sizing: content-box;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+        box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+        border-top-right-radius: 3px; border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px; border-top-left-radius: 3px;
+        font-size:30px;
+        letter-spacing: 2px;
+    }
+
+    div[data-role="editor-toolbar"] {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+
+    .dropdown-menu a {
+        cursor: pointer;
+    }
+
+    .btn{
+        width: 20px;
+    }
+
+    .bold,.bold:hover,.bold:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-1bold.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .italic,.italic:hover,.italic:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-2italic.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .bottomline,.bottomline:hover,.bottomline:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-3bottomline.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .color,.color:hover,.color:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-4fontcolor.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .href,.href:hover,.href:active,.href.open{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-5href.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .attach,.attach:hover,.attach:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-6attach_edit.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .left,.left:hover,.left:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-7left.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .center,.center:hover,.center:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-8center.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .right,.right:hover,.right:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-9right.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .symbol,.symbol:hover,.symbol:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-10symbol_dot.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .num,.num:hover,.num:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-11symbol_num.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .rightindent,.rightindent:hover,.rightindent:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-12right_indent.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .leftindent,.leftindent:hover,.leftindent:active{
+        height:20px;
+        background: url('http://static.platform.intra.weibo.com/layouts/layout/img/02-13left_indent.png') no-repeat center;
+        background-size: 19px 19px;
+    }
+
+    .submit,.submit:hover,.submit:active{
+        height:18px;
+       width: 30px;
+        background: url("http://static.platform.intra.weibo.com/layouts/layout/img/02-14submit.png") no-repeat 0;
+        background-size:18px 18px;
+        border: 0!important;
+        box-shadow:0 0 0 0;
+        /*padding-bottom: 0;*/
+    }
+
+
+</style>
+<div class="container-fluid">
+<div class="row" style="margin-top: 20px;">
+
+    <form id="form" enctype="multipart/form-data" method="post" action="upload.php">
+        <div id="title" data-role="editor-toolbar" data-target="#editor" style="margin-bottom: 10px;padding-right: 18px;">
+            <input type="text" id="titletext" placeholder="请输入标题" maxlength="35"/>
+        </div>
+
+        <div class="btn-toolbar" data-role="editor-toolbar" data-target="#editor">
+            <div class="btn-group">
+                <a class="btn bold" data-edit="bold" title="Bold (Ctrl/Cmd+B)" ></a>
+                <a class="btn italic" data-edit="italic" title="Italic (Ctrl/Cmd+I)"></a>
+                <a class="btn bottomline" data-edit="underline" title="Underline (Ctrl/Cmd+U)"></a>
+                <!--<a class="btn href" data-edit="underline" title="Underline (Ctrl/Cmd+U)"></a>-->
+                <!--<a class="btn attach" data-edit="insertunorderedlist" title="Bullet list"></a>-->
+                <a class="btn left" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"></a>
+                <a class="btn center" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"></a>
+                <a class="btn right" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"></a>
+                <a class="btn symbol" data-edit="insertunorderedlist" title="Bullet list"></a>
+                <a class="btn num" data-edit="insertorderedlist" title="Number list"></a>
+                <a class="btn leftindent" data-edit="outdent" title="Reduce indent (Shift+Tab)"></a>
+                <a class="btn rightindent" data-edit="indent" title="Indent (Tab)"></a>
+            </div>
+
+            <div class="btn-group">
+                <a class="btn href dropdown-toggle" data-toggle="dropdown" title="Hyperlink"></a>
+                <div class="dropdown-menu input-append" style="width: 210px;">
+                    <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
+                    <button class="btn" type="button" style="width: 34px;padding: 4px 4px;">Add</button>
+                </div>
+                <a class="btn attach" title="Insert file" id="fileBtn"></a>
+                <input type="file" data-role="magic-overlay" data-target="#fileBtn" name="file" onchange="fileSelected();"  id="file" />
+                <a class="btn" id="fileUpload" style="display: none"></a>
+            </div>
+
+            <div class="btn-group" style="float: right;">
+                <input id="btn" type="button" class="btn submit" style="padding-top: 5px;" onchange="submit();">提交</input>
+            </div>
+        </div>
+
+        <div id="editor" style="margin-top: 10px;">
+            Go ahead&hellip;
+        </div>
+    </form>
+
+
+</div>
+
+</div>
+<?php if($type=='result') {?>
+    <script>  var typepage='result';</script>
+<?php }elseif($type=='report'){ ?>
+    <script>  var typepage='report';</script>
+<?php }?>
+<script>
+    $(function(){
+        function initToolbarBootstrapBindings() {
+            $('a[title]').tooltip({container:'body'});
+            $('.dropdown-menu input').click(function() {return false;})
+                .change(function () {$(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');})
+                .keydown('esc', function () {this.value='';$(this).change();});
+            $('[data-role=magic-overlay]').each(function () {
+                var overlay = $(this), target = $(overlay.data('target'));
+                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+            });
+        };
+        function showErrorAlert (reason, detail) {
+            var msg='';
+            if (reason==='unsupported-file-type') { msg = "Unsupported format " +detail; }
+            else {
+                console.log("error uploading file", reason, detail);
+            }
+            alert("文件上传失败："+' '+msg);
+        };
+        initToolbarBootstrapBindings();
+        $('#editor').wysiwyg({ fileUploadError: showErrorAlert} );
+        window.prettyPrint && prettyPrint();
+    });
+</script>
+
+<script>
+
+    var file;
+    var flag=1;
+    function fileSelected() {
+        file = document.getElementById('file').files[0];
+        if (file) {
+            var fileSize = 0;
+            if (file.size > 1024 * 1024){
+                fileSize = (Math.round(file.size * 100 / (1024 * 1024)) / 100).toString() + 'MB';
+            } else{
+                fileSize = (Math.round(file.size * 100 / 1024) / 100).toString() + 'KB';
+            }
+            var name=file.name;
+            var type=file.type;
+        }
+
+        if (/(doc|word|ppt|excel|txt|eml|csv)/g.test(type)) {
+            flag=1;
+            $('#fileUpload').css('display','block');
+            $('#fileUpload').html(name+"上传成功");
+        } else{
+            flag=0;
+            alert("只能上传eml、word文档、PPT、Excel、txt、csv类型的附件！");
+        }
+    }
+
+    $("#btn").click(function (event) {
+        event.preventDefault();
+        if(flag==1){
+            if($('#titletext').val()==''){
+                alert("请填写标题！");
+            }else{
+                submit();
+            }
+        }else{
+            alert("附件类型不支持！");
+        }
+
+    });
+    function submit() {
+        var myhtml = document.getElementById("editor").outerHTML;
+        var mytext = document.getElementById("editor").innerHTML;
+        var text = mytext.replace(/<[^>]+>/g,"");
+        var mytitle = $("#titletext").val();
+        var formData = new FormData();
+        var mydate = new Date();
+        var time='';
+        time = mydate.getFullYear(); //获取当前年份(4位)
+        var month=mydate.getMonth()+1;
+        time = time + '-' + month; //获取当前月份(0-11,0代表1月)
+        time = time + '-' +mydate.getDate(); //获取当前日(1-31)
+        time = time + ' ' +mydate.getHours();
+        time = time + ':' +mydate.getMinutes();
+        time = time + ':' +mydate.getSeconds();
+        formData.append('myfile', file);
+        formData.append('time',time);
+        formData.append('content',myhtml);
+        formData.append('onlycontent',text);
+        formData.append('title',mytitle);
+        formData.append('type',typepage);
+        var oReq = new XMLHttpRequest();
+        oReq.open("POST", "/download/submit");
+        oReq.send(formData);
+//        $('#aaa').html(myhtml);
+        oReq.onreadystatechange = function () {
+            if(oReq.response == "0"){
+                alert("标题内容与之前重复，请重新输入标题");
+            }else{
+                if (oReq.readyState == 4 && oReq.status == 200) {
+                    alert('上传成功');
+                    if(typepage=="report"){
+                        window.location.href='/download/report';
+                    }else{
+                        window.location.href='/download/result';
+                    }
+                }
+            }
+     }
+    }
+</script>
+
+
+</div>
+<!-- END CONTENT -->
+</div>
+<!-- BEGIN CONTENT BODY -->
+</div>
+<!-- END CONTAINER -->
+
+<!--[if lt IE 9]>
+<script src="http://static.platform.intra.weibo.com/global/plugins/respond.min.js"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/excanvas.min.js"></script>
+<![endif]-->
+<!-- BEGIN CORE PLUGINS -->
+
+<script src="http://static.platform.intra.weibo.com/global/plugins/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/js.cookie.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/bootstrap-hover-dropdown/bootstrap-hover-dropdown.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/jquery.blockui.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/uniform/jquery.uniform.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js" type="text/javascript"></script>
+<!-- END CORE PLUGINS -->
+<!-- BEGIN PAGE LEVEL PLUGINS -->
+<script src="http://static.platform.intra.weibo.com/global/plugins/moment.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/bootstrap-daterangepicker/daterangepicker.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/morris/morris.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/morris/raphael-min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/counterup/jquery.waypoints.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/counterup/jquery.counterup.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/amcharts/amcharts.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/amcharts/serial.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/amcharts/pie.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/amcharts/radar.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/amcharts/themes/light.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/amcharts/themes/patterns.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/amcharts/themes/chalk.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/ammap/ammap.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/ammap/maps/js/worldLow.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/amcharts/amstockcharts/amstock.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/flot/jquery.flot.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/flot/jquery.flot.resize.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/flot/jquery.flot.categories.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/jquery-easypiechart/jquery.easypiechart.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/global/plugins/jquery.sparkline.min.js" type="text/javascript"></script>
+<!-- <script src="http://static.platform.intra.weibo.com/global/plugins/jqvmap/jqvmap/jquery.vmap.js" type="text/javascript"></script> -->
+<!-- <script src="http://static.platform.intra.weibo.com/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.russia.js" type="text/javascript"></script> -->
+<!-- <script src="http://static.platform.intra.weibo.com/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.world.js" type="text/javascript"></script> -->
+<!-- <script src="http://static.platform.intra.weibo.com/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.europe.js" type="text/javascript"></script> -->
+<!-- <script src="http://static.platform.intra.weibo.com/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.germany.js" type="text/javascript"></script> -->
+<!-- <script src="http://static.platform.intra.weibo.com/global/plugins/jqvmap/jqvmap/maps/jquery.vmap.usa.js" type="text/javascript"></script> -->
+<!-- <script src="http://static.platform.intra.weibo.com/global/plugins/jqvmap/jqvmap/data/jquery.vmap.sampledata.js" type="text/javascript"></script> -->
+<!-- END PAGE LEVEL PLUGINS -->
+<!-- BEGIN THEME GLOBAL SCRIPTS -->
+<script src="http://static.platform.intra.weibo.com/global/scripts/app.min.js" type="text/javascript"></script>
+<!-- END THEME GLOBAL SCRIPTS -->
+<!-- BEGIN PAGE LEVEL SCRIPTS -->
+<script src="http://static.platform.intra.weibo.com/pages/scripts/dashboard.min.js" type="text/javascript"></script>
+<!-- END PAGE LEVEL SCRIPTS -->
+<!-- BEGIN THEME LAYOUT SCRIPTS -->
+<script src="http://static.platform.intra.weibo.com/layouts/layout/scripts/layout.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/layouts/layout/scripts/demo.min.js" type="text/javascript"></script>
+<script src="http://static.platform.intra.weibo.com/layouts/global/scripts/quick-sidebar.min.js" type="text/javascript"></script>
+<!-- END THEME LAYOUT SCRIPTS -->
+<!-- BEGIN SELECT SCRIPTS -->
+<script src="http://static.platform.intra.weibo.com/global/plugins/select2/js/select2.min.js" type="text/javascript"></script>
+<!-- END SELECT SCRIPTS -->
+<!-- BEGIN CAROUSEL SCRIPTS -->
+<script src="http://static.platform.intra.weibo.com/global/plugins/owl-carousel/owl.carousel.min.js" type="text/javascript"></script>
+<!-- END CAROUSEL SCRIPTS -->
+
+<!--<script src="http://jonmiles.github.io/bootstrap-treeview/js/bootstrap-treeview.js"></script>-->
+<script src="http://static.platform.intra.weibo.com/global/plugins/bootbox/bootbox.min.js" type="text/javascript"></script>
+
+
+<script>
+    $(function () {
+
+        var url = window.location.pathname;
+
+        $(".page-sidebar-menu li").removeClass('active open');
+
+        if (url.indexOf("/active") >= 0) {
+            $("#activeGo").addClass('active open');
+        }
+
+        if (url.indexOf("/feature") >= 0) {
+            $("#featureTime").addClass('active open');
+        }
+
+        if (url.indexOf("/math") >= 0) {
+            $("#mathAdmin").addClass('active open');
+        }
+
+        if (url.indexOf("/monitor") >= 0 && url.indexOf("/feature") < 0) {
+            $("#monitorTab").addClass('active open');
+        }
+
+        if (url.indexOf("/model/") >= 0) {
+            $("#modelTab").addClass('active open');
+        }
+
+        if (url.indexOf("/tool") >= 0) {
+            $("#toolTab").addClass('active open');
+        }
+
+        if (url.indexOf("/lab") >= 0) {
+            $("#labTab").addClass('active open');
+        }
+
+        if (url.indexOf("/news") >= 0) {
+            $("#newsTab").addClass('active open');
+        }
+
+        if (url.indexOf("/download") >= 0) {
+            $("#download").addClass('active open');
+        }
+
+        if (url.indexOf("/modelplat") >= 0) {
+            $("#modelplat").addClass('active open');
+        }
+
+        if (url.indexOf("/trigger") >= 0 || url.indexOf("/flume") >= 0 || url.indexOf("/stormTag") >= 0 || url.indexOf("/dataMining") >= 0) {
+            $("#tag_main_index").addClass('active open');
+        }
+
+    });
+
+</script>
+
+</body>
+</html>
+

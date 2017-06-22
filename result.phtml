@@ -1,0 +1,320 @@
+<?php require_once (APP_PATH.'application/views/common/header.phtml');?>
+
+<style>
+    .textupload{
+        height:18px;
+        padding-left: 30px;
+        background: url("http://static.platform.intra.weibo.com/layouts/layout/img/01-1new.png") no-repeat 0 center;
+        background-size:18px 18px;
+        margin-top: 10px;
+    }
+
+    .textorder{
+        height:18px;
+        padding-left: 30px;
+        background: url("http://static.platform.intra.weibo.com/layouts/layout/img/01-2order.png") no-repeat 0 center;
+        background-size:18px 18px;
+        margin-top: 10px;
+    }
+
+    .txtsearch{
+        height:30px;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    #search_btn{
+        background: transparent;
+        background: url("http://static.platform.intra.weibo.com/layouts/layout/img/01-3search.png") no-repeat 0;
+        background-size:20px 20px;
+        border: 0;
+        width: 25px;
+        height: 25px;
+    }
+
+    .download{
+        height:18px;
+        padding-left: 20px;
+        background: url("http://static.platform.intra.weibo.com/layouts/layout/img/01-4attachment.png") no-repeat 0 center;
+        background-size:18px 18px;
+        float: left;
+        margin-right: 40px;
+    }
+
+    .time{
+        height:18px;
+        float: left;
+        margin-right: 40px;
+        color:#46a4da;
+    }
+
+    .user{
+        height:18px;
+        float: left;
+        margin-right: 40px;
+        color:#46a4da;
+    }
+
+
+    .content p{
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        letter-spacing: 0.5px;
+        line-height: 25px;
+    }
+
+    #editor {
+        max-height: 250px;
+        height: 250px;
+        background-color: white;
+        border-collapse: separate;
+        border: 1px solid rgb(204, 204, 204);
+        padding: 4px;
+        box-sizing: content-box;
+        -webkit-box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+        box-shadow: rgba(0, 0, 0, 0.0745098) 0px 1px 1px 0px inset;
+        border-top-right-radius: 3px; border-bottom-right-radius: 3px;
+        border-bottom-left-radius: 3px; border-top-left-radius: 3px;
+        overflow: scroll;
+        outline: none;
+    }
+
+    #search_box { background: white; opacity: 0.8; text-align:right }
+    #searchstr { font-size: 14px; height: 20px;  outline: none; }
+    .highlight { background: yellow; color: red; }
+    #tip { background: #ffc; border: 1px solid #999; width: 110px; text-align: center;
+        display: none; font-size: 12px; }
+
+</style>
+
+<div class="container-fluid">
+    <div class="row">
+        <div style="text-align: center;font-size: 72.5%;padding:30px 0 20px 0;position:relative;width:100%;height:224px;background-image: url('http://static.platform.intra.weibo.com/layouts/layout/img/report.jpg')">
+            <!--            <img src="http://static.platform.intra.weibo.com/layouts/layout/img/report.jpg" style="width:100%;height:270px" alt="" />-->
+            <!--            <div style="position:absolute;left:30%;top:10%;font-size: 62.5%;width:100%%;z-indent:2;text-align: center;">-->
+            <p style="font-family:'Arial';margin-top:10px;font-size:4.5em;letter-spacing:5px;font-weight:500;color: #02FDFF;opacity: 0.9;">机器学习成果</p>
+            <p style="font-family:'Arial';margin-top:10px;font-size:4.5em;letter-spacing:5px;font-weight:300;color: #02FDFF;opacity: 0.9;">-2017-</p>
+            <!--            </div>-->
+        </div>
+    </div>
+    <div class="row" style="margin-top: 30px;height:40px;border-bottom: 2px solid #d8d8d8;">
+        <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left:0;padding-right: 0;">
+            <form id="uploadForm" name="uploadForm" style="display: inline" action="/download/report" method="post" enctype="multipart/form-data">
+                <input type="file" name="uploadFile" id="uploadFile" style="visibility:hidden;position:absolute;top:0px;width:0px"/>
+            </form>
+            <!--            <div class="textupload" onclick="javascript:uploadFile.click()">上传周报</div>-->
+            <div class="textupload" ><a href="/download/edit?type=result">上传成果</a></div>
+        </div>
+        <div class="col-sm-8 col-md-8 col-lg-8" >
+            <div class="textorder" onclick="order();">按上传时间降序排序</div>
+        </div>
+        <div class="col-sm-2 col-md-2 col-lg-2" style="padding-right: 0;">
+            <div id="search_box" style="float:right;">
+                <div class="row">
+                    <div class="col-sm-10 col-md-10 col-lg-10" style="padding-right: 5px;">
+                        <input type="search" id="searchstr" class="txtsearch" style="height:30px;float:right;border-radius:25px!important;-webkit-border-radius: 25px !important;"/>
+                    </div>
+                    <!--                <span class="glyphicon glyphicon-search"></span>-->
+                    <div class="col-sm-2 col-md-2 col-lg-2" style="padding-left: 0;">
+                        <input type="button" id="search_btn" value=""/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="content">
+        <?php foreach ($result as $k => $d):?>
+            <?php foreach ($d as $m => $n):?>
+                <?php if($m=='title') { $title=$n; ?>
+                <?php } else if($m=='text'){ $content=$n;?>
+                <?php }else if($m=='name') { $name=$n;?>
+                <?php }elseif($m=='time') { $time=$n;?>
+                <?php } elseif($m=='username') { $user=$n;}?>
+            <?php endforeach;?>
+            <div class="row content" style="margin-top: 20px;height:200px;" id=<?php echo $title;?>>
+                <h2><?php echo $title;?></h2>
+                <a href=<?php echo "http://mlplat.intra.weibo.com/download/content?type=result&title=".$title;?>>
+                    <p style="color: #000000;"><?php echo $content;?></p>
+                </a>
+                <div style="height:40px;border-bottom: 1px solid #d8d8d8;">
+                    <div class="download"><?php if($name==''){?> <span style="color:#9f9f9f;text-decoration: none; ">下载附件</span></div>
+
+                    <?php  } else {?> <a href=<?php echo "http://static.platform.intra.weibo.com/layouts/layout/file/file/".$name;?> style="color:#46a4da;">下载附件</a></div><?php }?>
+                    <div class="time" id=<?php echo "time".$title;?>>发表时间：<?php echo $time;?></div>
+                    <div class="user" style="50px;">发布人：<?php echo $user;?></div>
+                </div>
+            </div>
+        <?php endforeach;?>
+    </div>
+</div>
+<?php require_once (APP_PATH.'application/views/common/footer.phtml');?>
+<script src="jquery-1.8.2.js"></script>
+
+<script type="text/javascript">
+    $(function () {
+        //按钮的点击事件
+        $('#btn').click(function () {
+            //触发file的点击事件
+            $('#uploadFile').click();
+        });
+        //file的change事件
+        $('#uploadFile').change(function () {
+            //提交form表单的数据
+            $('#uploadForm').submit();
+            //清空file标签的value，否则再次提交此文件时，onchange事件就不触发了
+            $('#uploadFile').val('');
+        });
+
+        $('#search_btn').click(highlight);//点击search时，执行highlight函数；
+        $('#searchstr').keydown(function (e) {
+            var key = e.which;
+            if (key == 13) highlight();
+        })
+        var i = 0;
+        var sCurText;
+        function highlight(){
+            clearSelection();//先清空一下上次高亮显示的内容；
+
+            var flag = 0;
+            var bStart = true;
+
+            $('#tip').text('');
+            $('#tip').hide();
+            var searchText = $('#searchstr').val();
+            var _searchTop = $('#searchstr').offset().top+30;
+            var _searchLeft = $('#searchstr').offset().left;
+            if($.trim(searchText)==""){
+                showTips("请输入查找内容",_searchTop,3,_searchLeft);
+                return;
+            }
+            //查找匹配
+            var searchText = $('#searchstr').val();//获取你输入的关键字；
+            var regExp = new RegExp(searchText, 'g');//创建正则表达式，g表示全局的，如果不用g，则查找到第一个就不会继续向下查找了；
+            var content = $("#content").text();
+            if (!regExp.test(content)) {
+                showTips("没有找到要查找的内容",_searchTop,3,_searchLeft);
+                return;
+            } else {
+                if (sCurText != searchText) {
+                    i = 0;
+                    sCurText = searchText;
+                }
+            }
+            //高亮显示
+            $('p').each(function(){
+                var html = $(this).html();
+                //将找到的关键字替换，加上highlight属性；
+                var newHtml = html.replace(regExp, '<span class="highlight">'+searchText+'</span>');
+                $(this).html(newHtml);//更新；
+                flag = 1;
+            });
+
+            //定位并提示信息
+            if (flag == 1) {
+                if ($(".highlight").size() > 1) {
+                    var _top = $(".highlight").eq(i).offset().top+$(".highlight").eq(i).height();
+                    var _tip = $(".highlight").eq(i).parent().find("strong").text();
+                    if(_tip=="") _tip = $(".highlight").eq(i).parent().parent().find("strong").text();
+                    var _left = $(".highlight").eq(i).offset().left;
+                    var _tipWidth = $("#tip").width();
+                    if (_left > $(document).width() - _tipWidth) {
+                        _left = _left - _tipWidth;
+                    }
+                    $("#tip").html(_tip).show();
+                    $("#tip").offset({ top: _top, left: _left });
+
+                }else{
+                    var _top = $(".highlight").offset().top+$(".highlight").height();
+                    var _tip = $(".highlight").parent().find("strong").text();
+                    var _left = $(".highlight").offset().left;
+                    $('#tip').show();
+                    $("#tip").html(_tip).offset({ top: _top, left: _left });
+                }
+                $("html, body").animate({ scrollTop: _top - 50 });
+                i++;
+                if (i > $(".highlight").size() - 1) {
+                    i = 0;
+                }
+            }
+        }
+        var tipsDiv = '<div class="tipsClass"></div>';
+        $( 'body' ).append( tipsDiv );
+        function showTips( tips, height, time,left ){
+            var windowWidth = document.documentElement.clientWidth;
+            $('.tipsClass').text(tips);
+            $( 'div.tipsClass' ).css({
+                'top' : height + 'px',
+                'left' :left + 'px',
+                'position' : 'absolute',
+                'padding' : '8px 6px',
+                'background': '#000000',
+                'font-size' : 14 + 'px',
+                'font-weight': 900,
+                'margin' : '0 auto',
+                'text-align': 'center',
+                'width' : 'auto',
+                'color' : '#fff',
+                'border-radius':'2px',
+                'opacity' : '0.8' ,
+                'box-shadow':'0px 0px 10px #000',
+                '-moz-box-shadow':'0px 0px 10px #000',
+                '-webkit-box-shadow':'0px 0px 10px #000'
+            }).show();
+            setTimeout( function(){$( 'div.tipsClass' ).fadeOut();}, ( time * 1000 ) );
+        }
+        function clearSelection(){
+            $('p').each(function(){
+                //找到所有highlight属性的元素；
+                $(this).find('.highlight').each(function(){
+                    $(this).replaceWith($(this).html());//将他们的属性去掉；
+                });
+            });
+        }
+    });
+
+    function order(){
+        var myarr_time = {};
+        var length=0;
+        var arr = new Array();
+        $(".time").each(function () {
+            var time=$(this).html().substr(5);
+            var id=this.id;
+            var i = new Date(time);
+            myarr_time[id]=i;
+            length++;
+        });
+
+        for (var param in myarr_time) {
+            arr.push(myarr_time[param]);
+        }
+
+        arr.sort(function(a, b){
+            return a < b ? 1 : -1;
+        });
+
+        var content=document.getElementById("content");
+        for( var m in arr){
+            var n=arr[m];
+            for(var value in myarr_time){
+                if(myarr_time[value]==n){
+                    var timeid=value;
+                }
+            }
+            var name=timeid.substr(4);
+            var divs = document.getElementById(name);
+            content.appendChild(divs);
+        }
+    }
+
+
+
+
+
+
+
+</script>
+

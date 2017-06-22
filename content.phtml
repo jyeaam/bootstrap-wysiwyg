@@ -1,0 +1,106 @@
+<?php require_once (APP_PATH.'application/views/common/header.phtml');?>
+
+<style>
+    .time{
+        height:18px;
+        float: left;
+        margin-right: 40px;
+        color:#46a4da;
+    }
+
+    .download{
+        height:18px;
+        padding-left: 20px;
+        background: url("http://static.platform.intra.weibo.com/layouts/layout/img/01-4attachment.png") no-repeat 0 center;
+        background-size:18px 18px;
+        float: left;
+        margin-right: 40px;
+    }
+</style>
+<div id="id" style="color: transparent;"><?php echo $id;?></div>
+<div class="container-fluid">
+
+        <?php foreach ($result as $k => $d):?>
+        <?php foreach ($d as $m => $n):?>
+            <?php if($m=='title') { $title=$n; ?>
+            <?php } else if($m=='content'){ $content=$n;?>
+            <?php }else if($m=='name') { $name=$n;?>
+            <?php }elseif($m=='time') { $time=$n;?>
+            <?php } elseif($m=='username') { $user=$n;?>
+            <?php } elseif($m=='id') { $id=$n;}?>
+        <?php endforeach;?>
+        <?php endforeach;?>
+    <div class="row" style="padding: 10px 20px;">
+        <div style="height: 80px;text-align: center;"> <h1><?php echo $title;?></h1></div>
+        <div style="height:30px;border-top: 1px solid #d8d8d8;">
+            <div style="margin-top: 15px;">
+                <div class="download"><?php if($name==''){?> <span style="color:#9f9f9f;text-decoration: none; ">下载附件</span></div>
+                <?php  } else {?> <a href=<?php echo "http://static.platform.intra.weibo.com/layouts/layout/file/file/".$name;?> style="color:#46a4da;">下载附件</a></div><?php }?>
+                <div class="time" id=<?php echo "time".$name;?>>发表时间：<?php echo $time;?></div>
+                <div class="time" style="50px;">发布人：<?php echo $user;?></div>
+                <a class="time" style="float: right;" href="/download/edit">修改</a>
+                <a class="time" style="float: right;" data-toggle="modal" data-target="#myModal">删除</a>
+            </div>
+        </div>
+
+    <div style="align-content: center;">
+        <div id="model">
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                &times;
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">
+                                提示
+                            </h4>
+                        </div>
+                        <div class="modal-body" style="border-width: 0;">
+                            确定要删除文章？
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消
+                            </button>
+                            <button type="button" class="btn btn-primary" id="delete">
+                                确定删除
+                            </button>
+                        </div>
+                    </div><!-- /.modal-content -->
+                </div><!-- /.modal -->
+            </div>
+
+            <div style="margin-top: 50px;">
+                <p><?php echo $content;?></p>
+            </div>
+        </div>
+    </div>
+
+
+
+    <?php require_once (APP_PATH.'application/views/common/footer.phtml');?>
+
+<?php if($type=='result') {?>
+    <script>  var typepage='result';</script>
+<?php }elseif($type=='report'){ ?>
+    <script>  var typepage='report';</script>
+<?php }?>
+<script>
+
+        //按钮的点击事件
+        $('.btn-primary').on('click', function() {
+            var id=$("#id").html();
+            $.ajax({
+                url: "/download/deleteid",
+                type: "post",
+                dataType: "json",
+                contentType: "application/json",
+                traditional: true,
+                data:{'id':id},
+                success: function (data) {
+                    window.location.href='/download/'+typepage;
+                }
+            });
+        });
+
+</script>
