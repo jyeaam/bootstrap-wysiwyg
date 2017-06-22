@@ -4,7 +4,7 @@ bootstrap-wysiwyg
 fork from  
 https://github.com/steveathon/bootstrap-wysiwyg
 
-change upload file types.
+change upload file types、css style，add search-box and sorted by time function.
 
 
 
